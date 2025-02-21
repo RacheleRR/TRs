@@ -5,9 +5,11 @@ library(dplyr)
 library(tidyr)
 library(tidyverse)
 
+setwd("/home/rachele/EHDN_DBSCAN_correct/Result/results_dbscan_without_QC_NOUHR/AFTER_DBSCAN/")
+
 # Read the reordered and annotated TSV files
-ehdn_results_reordered <- read.delim("/home/rachele/ehdn_DBSCAN_reorder.tsv", stringsAsFactors = FALSE)
-ehdn_results_annotated <- read.delim("/home/rachele/ehdn_DBSCAN_annotated.tsv", stringsAsFactors = FALSE)
+ehdn_results_reordered <- read.delim("~/ehdn_DBSCAN_reorder.tsv", stringsAsFactors = FALSE)
+ehdn_results_annotated <- read.delim("~/ehdn_DBSCAN_annotated.tsv", stringsAsFactors = FALSE)
 
 
 ehdn_results_annotated <- ehdn_results_annotated %>%
@@ -17,7 +19,8 @@ ehdn_results_annotated <- ehdn_results_annotated %>%
     outlier_label = coalesce(outlier_label.reordered, outlier_label),
     outlier_label2 = coalesce(outlier_label2.reordered, outlier_label2)
   ) %>%
-  select(-ref.reordered, -outlier_label.reordered, -outlier_label2.reordered)
+  select(-ref.reordered, -outlier_label.reordered, -outlier_label2.reordered) %>%
+  mutate(count = sapply(strsplit(outliers, ";"), length))
 
 
 #analysis 1 outlier in 1 individual ( ORA) general
@@ -55,8 +58,6 @@ filter_and_annotate <- function(df) {
 
 ehdn_modified <- filter_and_annotate(ehdn_results_annotated)
 
-ehdn_modified <- ehdn_modified %>%
-  mutate(count = sapply(strsplit(outliers, ";"), length))
 
 outliers_1_individual_case <- ehdn_modified %>%
   filter(count == 1 & outlier_label == "case")
@@ -72,6 +73,14 @@ outliers_control_mixed <- ehdn_results_annotated %>%
 
 outliers_cases <- ehdn_results_annotated %>%
     filter(count > 1  & outlier_label == "case")
+
+outliers_cases_1 <- ehdn_results_annotated %>% filter(count == 1  & outlier_label == "case")
+
+write.table(outliers_cases_1,"outliers_1_case_no_split.tsv",sep = "\t",row.names = F)
+write.table(outliers_control_mixed, "outliers_control_mixed_no_split.tsv", sep = "\t", row.names = F)
+write.table(outliers_cases, "outliers_case_more_then_1_no_split.tsv",sep = "\t",row.names = F)
+write.table(outliers_1_individual_case, "outliers_1_case_split.tsv", sep = "\t",row.names = F)
+write.table(Outlier_1_exonic_case,"outliers_1_case_exonic_split.tsv", sep = "\t", row.names = F)
 
 
 
