@@ -11,10 +11,10 @@
         library(readxl)
         library(tidyr)
         library(stringr)
-
+        setwd("/home/rachele/EHDN_DBSCAN_correct/Result/results_dbscan_without_QC_NOUHR/AFTER_DBSCAN/")
  # load my data   
-        ehdn  <- read.delim("~/EHDN_DBSCAN_new_CALLS_OCT/outlier_1_case.tsv")
-#        ehdn  <- read.delim("~/EHDN_DBSCAN_new_CALLS_OCT/outlier_1_exonic_case.tsv")
+        ehdn  <- read.delim("outliers_1_case_split.tsv")
+#        ehdn  <- read.delim("outliers_1_case_exonic_split.tsv")
 
 
 
@@ -84,40 +84,48 @@
 #? VENNDIAGRAM 
         library(VennDiagram)
         library(RColorBrewer)
-
+        
         # Define custom colors
         venn_colors <- c("#FF6347", "#4682B4", "#32CD32", "#FFD700", "#8A2BE2")  # Example colors: Tomato, SteelBlue, LimeGreen, Gold, BlueViolet
-
+        
         # First Venn Diagram
         x1 <- list(SCHEMA_pVal = common_ehdn_schizophrenia, Bipolar = common_ehdn_bipolar, SFARI_non_syndromic = common_ehdn_autism, GWAS = common_ehdn_gwas, SCHEMA_OR = common_ehdn_schema_or)
+        
+        # Save the first Venn diagram as a PNG file
+        png("Venn_Schema_Bipolar_SFARI_GWAS_OR.png", width = 800, height = 800)
         grid.newpage()
         venn.plot1 <- venn.diagram(
-            x1,
-            filename = NULL,
-            col = venn_colors,
-            fill = venn_colors,
-            alpha = 0.5,
-            cex = 1,
-            cat.cex = 1,
-            cat.col = venn_colors,
-            main = "Venn Diagram 1: SCHEMA_pVal, Bipolar, SFARI_non_syndromic, GWAS, SCHEMA_OR"
+          x1,
+          filename = NULL,
+          col = venn_colors,
+          fill = venn_colors,
+          alpha = 0.5,
+          cex = 1,
+          cat.cex = 1,
+          cat.col = venn_colors,
+          main = "Venn Diagram 1: SCHEMA_pVal, Bipolar, SFARI_non_syndromic, GWAS, SCHEMA_OR"
         )
         grid.draw(venn.plot1)
-
+        dev.off()  # Close the graphics device
+        
         # Second Venn Diagram
         common_ehdn_gwas_schema_pval <- unique(c(common_ehdn_gwas, common_ehdn_schizophrenia))
         x2 <- list(GWAS_SCHEMA_pVal = common_ehdn_gwas_schema_pval, Bipolar = common_ehdn_bipolar, SFARI_syndromic = common_ehdn_sfari_syndromic, SFARI_non_syndromic = common_ehdn_autism, SCHEMA_OR = common_ehdn_schema_or)
+        
+        # Save the second Venn diagram as a PNG file
+        png("Venn_GWAS_SFARI_SCHEMABipolar.png", width = 800, height = 800)
         grid.newpage()
         venn.plot2 <- venn.diagram(
-            x2,
-            filename = NULL,
-            col = venn_colors,
-            fill = venn_colors,
-            alpha = 0.5,
-            cex = 1,
-            cat.cex = 1,
-            cat.col = venn_colors,
-            main = "Venn Diagram 2: GWAS_SCHEMA_pVal, Bipolar, SFARI_syndromic, SFARI_non_syndromic, SCHEMA_OR"
+          x2,
+          filename = NULL,
+          col = venn_colors,
+          fill = venn_colors,
+          alpha = 0.5,
+          cex = 1,
+          cat.cex = 1,
+          cat.col = venn_colors,
+          main = "Venn Diagram 2: GWAS_SCHEMA_pVal, Bipolar, SFARI_syndromic, SFARI_non_syndromic, SCHEMA_OR"
         )
         grid.draw(venn.plot2)
-
+        dev.off()  # Close the graphics device
+        
