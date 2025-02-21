@@ -1,10 +1,17 @@
-# Define the input file with the outlier values
-input_file <- "EHdn.expansions.2025.01.10_noQC"
-# Define the manifest file
-manifest_file <- "manifest_noQC_new_calls_oct24"
+library(tidyr)
+library(dplyr)
 
-# Load the manifest dataframe
-manifest_df <- get(manifest_file)
+manifest_noUHRNA <- read.table("~/TRs/manifest_noUHRNA.tsv", sep = "\t", header = TRUE)
+Ehdn_dbscan_noUHR_noQC <- read.table("~/EHDN_DBSCAN_correct/Result/results_dbscan_without_QC_NOUHR/EHdn.expansions.2025-02-18.tsv", sep = "\t" , header = T)
+
+
+# Define the input file with the outlier values
+input_file <- "Ehdn_dbscan_noUHR_noQC"
+# Define the manifest file
+ manifest_file <- "manifest_noUHRNA"
+# 
+# # Load the manifest dataframe
+ manifest_df <- get(manifest_file)
 
 # Load the input dataframe
 input_df <- get(input_file)
@@ -86,10 +93,10 @@ cat("Number of 'mixed' labels:", mixed_count, "\n")
 
 
 #clean it up to use for annovar 
-ehdn_results_reordered <- EHdn.expansions.2024.11.10 %>%
+ehdn_results_reordered <- input_df %>%
 rename(contig = chr) %>%
 select(contig, start, end, everything())
 
 
 # Write the reordered data to a new TSV file
-write.table(ehdn_results_reordered, "/home/rachele/ehdn_DBSCAN_reorder.tsv", sep = "\t", row.names = FALSE, quote = FALSE)
+write.table(ehdn_results_reordered, "/home/rachele/EHDN_DBSCAN_correct/Result/results_dbscan_without_QC_NOUHR/AFTER_DBSCAN/ehdn_DBSCAN_reorder.tsv", sep = "\t", row.names = FALSE, quote = FALSE)
