@@ -3,10 +3,10 @@
 library(dplyr)
 library(tidyr)
 library(ggplot2)
-
+ setwd("/home/rachele/EHDN_DBSCAN_correct/Result/results_dbscan_without_QC_NOUHR/AFTER_DBSCAN/")
 # Read the reordered and annotated TSV files
-ehdn_results_reordered <- read.delim("/home/rachele/ehdn_DBSCAN_reorder.tsv", stringsAsFactors = FALSE)
-ehdn_results_annotated <- read.delim("/home/rachele/ehdn_DBSCAN_annotated.tsv", stringsAsFactors = FALSE)
+ehdn_results_reordered <- read.delim("~/ehdn_DBSCAN_reorder.tsv", stringsAsFactors = FALSE)
+ehdn_results_annotated <- read.delim("~/ehdn_DBSCAN_annotated.tsv", stringsAsFactors = FALSE)
 
 # Merge reordered and annotated results
 ehdn_results_annotated <- ehdn_results_annotated %>%
