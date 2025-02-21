@@ -4,7 +4,8 @@
         library(GenomicRanges)
         library(ggplot2)
         library(tidyr)
-
+        setwd("/home/rachele/EHDN_DBSCAN_correct/Result/results_dbscan_without_QC_NOUHR/AFTER_DBSCAN/")
+        
  #?LOAD
         refflat <- read.delim("/home/rachele/Downloads/refFlat.txt", stringsAsFactors = F, header = F)
         known.expansion <- read.delim("/home/rachele/Downloads/bret_stuff/UCSC_simple_repeats_hg38.period_lte20.txt", stringsAsFactors = F, header = F)
@@ -14,9 +15,9 @@
 
 
         detected.expansion <- read.delim("/home/rachele/EHDN_DBSCAN_new_CALLS_OCT/Result/output_DBSCAN_Oct_24/DBSCAN/EHdn_for_DBSCAN_combined_counts_compared.bed", header = F)
-        outliers_1_case <- read.delim("~/outliers_1_case_no_split.tsv")
-        outliers_case <- read.delim("~/outliers_case_over1.tsv")
-        outliers_control_mixed <- read.delim("~/outliers_control_mixed.tsv")
+        outliers_1_case <- read.delim("outliers_1_case_no_split.tsv")
+        outliers_case <- read.delim("outliers_case_more_then_1_no_split.tsv")
+        outliers_control_mixed <- read.delim("outliers_control_mixed_no_split.tsv")
 
 
  #?CLEAN UP 
@@ -120,6 +121,7 @@
                             axis.text.y = element_text(size = 14), 
                             axis.title.y = element_text(size = 14)) +
                     geom_hline(yintercept = 0, size = 1, color = "white") +
+                    labs(title = "Distance to TSS ")+  
                     coord_cartesian(xlim = c(-5000, 5000)) + scale_x_continuous(breaks = c(-5000, 0, 5000)) +
                     scale_y_continuous(breaks = c(0, 0.0002)) +
                     scale_color_manual(values = c("#4393C3", "#338833", "#D6604D", "#FF7F00", "#984EA3", "#6A3D9A", "#CC0033" ))
@@ -148,6 +150,7 @@
                             axis.text.y = element_text(size = 14), 
                             axis.title.y = element_text(size = 14)) +
                     geom_hline(yintercept = 0, size = 1, color = "white") +
+                    labs(title = "Distance to TSS ")+ 
                     coord_cartesian(xlim = c(-5000, 5000)) + scale_x_continuous(breaks = c(-5000, 0, 5000)) +
                     scale_y_continuous(breaks = c(0, 0.0002)) +
                     scale_color_manual(values = c("#4393C3", "#338833", "#D6604D", "#FF7F00",  "#984EA3", "#CC0033"))
@@ -179,9 +182,9 @@
         exons <- read.delim("/home/rachele/Downloads/bret_stuff/hg38_exon_refFlat.txt", stringsAsFactors = F)
         
         detected.expansion <- read.delim("/home/rachele/EHDN_DBSCAN_new_CALLS_OCT/Result/output_DBSCAN_Oct_24/DBSCAN/EHdn_for_DBSCAN_combined_counts_compared.bed", header = F)
-        outliers_1_case <- read.delim("~/outliers_1_case_no_split.tsv")
-        outliers_case <- read.delim("~/outliers_case_over1.tsv")
-        outliers_control_mixed <- read.delim("~/outliers_control_mixed.tsv")
+        outliers_1_case <- read.delim("outliers_1_case_no_split.tsv")
+        outliers_case <- read.delim("outliers_case_more_then_1_no_split.tsv")
+        outliers_control_mixed <- read.delim("outliers_control_mixed_no_split.tsv")
 
 
         
@@ -330,6 +333,7 @@
                 axis.title.y = element_text(size = 14),
                 legend.position = "bottom") +  
         geom_hline(yintercept = 0, linewidth = 1, color = "white") + 
+        labs(title = "Distance to Splicing junction")+ 
         scale_x_continuous(breaks = c(-5000, 0, 5000)) +
         scale_y_continuous(breaks = c(0, 0.0002)) +
         scale_color_manual(values = c("#4393C3", "#338833", "#D6604D", "#FF7F00", "#984EA3", "#6A3D9A", "#CC0033" ))
@@ -354,6 +358,7 @@
                 axis.text.y = element_text(size = 14), 
                 axis.title.y = element_text(size = 14),
         legend.position = "bottom") +  
+        labs(title = "Distance to Splicing junction")+  
         geom_hline(yintercept = 0, size = 1, color = "white") + 
         scale_x_continuous(breaks = c(-5000, 0, 5000)) +
         scale_y_continuous(breaks = c(0, 0.0002)) +
