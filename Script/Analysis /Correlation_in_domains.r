@@ -14,6 +14,8 @@
     library(Biostrings)
 
 #? Prepare data 
+    setwd("/home/rachele/EHDN_DBSCAN_correct/Result/results_dbscan_without_QC_NOUHR/AFTER_DBSCAN/")
+    
     gs <- phastCons100way.UCSC.hg38
 
     bin.dt <- read.delim("/home/rachele/Downloads/bret_stuff/genome.bin.1k.tsv", stringsAsFactors = F)
@@ -23,7 +25,7 @@
     tmp <- score(gs, bin.g)
     bin.dt$PhastCons <- tmp
 
-    expansion <- read.delim("~/outliers_1_case_no_split.tsv", stringsAsFactors = F)
+    expansion <- read.delim("outliers_1_case_no_split.tsv", stringsAsFactors = F)
     expansion.g <- GRanges(expansion$contig, IRanges(expansion$start, expansion$end), "*")
     olap <- data.frame(findOverlaps(bin.g, expansion.g))
     olap <- aggregate(subjectHits ~ queryHits, olap, length)
@@ -88,7 +90,7 @@
                             levels = c("GC content", "phyloP",  "PhastCons", "fragile sites", "known STRs"))
 #? Graph 
 # Create the plot with the legend
-ggplot(dt.out[dt.out$feature != "known STRs", ], 
+domains<-ggplot(dt.out[dt.out$feature != "known STRs", ], 
        aes(x = feature, y = Odds.ratio, fill = type)) + 
     geom_bar(stat = "identity", width = .5, position = position_dodge(width = .5), color = "black") +
     geom_errorbar(aes(ymin = OR.lower, ymax = OR.upper), 
@@ -100,5 +102,8 @@ ggplot(dt.out[dt.out$feature != "known STRs", ],
           axis.title.y = element_text(size = 14), 
           panel.border = element_rect(fill = NA)) +
     scale_fill_manual(values = c("#D6604D", "#4393C3")) +
+    labs(title = "Correlation of functional domains")+
     scale_y_continuous(breaks = c(0, 1)) +
     guides(fill = guide_legend(title = "Type"))
+
+ggsave("correlation_domain.png", domains, width = 10, height = 6, dpi = 300)
