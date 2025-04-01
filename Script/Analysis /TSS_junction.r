@@ -4,7 +4,7 @@
         library(GenomicRanges)
         library(ggplot2)
         library(tidyr)
-        setwd("/home/rachele/EHDN_DBSCAN_correct/Result/results_dbscan_without_QC_NOUHR/AFTER_DBSCAN/")
+        setwd("/home/rachele/EHDN_DBSCAN_correct/Result/results_dbscan_with_QC_NOUHR/AFTER_DBSCAN/")
         
  #?LOAD
         refflat <- read.delim("/home/rachele/Downloads/refFlat.txt", stringsAsFactors = F, header = F)
@@ -99,6 +99,8 @@
             wilcox.test(abs(outliers_1_case.distance$distance), abs(outliers_control_mixed.distance$distance), alternative = "less")$p.value
             wilcox.test(abs(outliers_1_case.distance$distance), abs(common.distance$distance), alternative = "less")$p.value
             wilcox.test(abs(outliers_1_case.distance$distance), abs(detected.distance$distance), alternative = "less")$p.value
+            wilcox.test(abs(outliers_1_case.distance$distance),abs(common.distance$distance),alternative ="less")
+            
  #? GRAPH FULL
  # bind them all togther
             distance <- rbind(

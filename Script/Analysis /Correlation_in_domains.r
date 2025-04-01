@@ -14,7 +14,7 @@
     library(Biostrings)
 
 #? Prepare data 
-    setwd("/home/rachele/EHDN_DBSCAN_correct/Result/results_dbscan_without_QC_NOUHR/AFTER_DBSCAN/")
+    setwd("/home/rachele/EHDN_DBSCAN_correct/Result/results_dbscan_with_QC_NOUHR/AFTER_DBSCAN/")
     
     gs <- phastCons100way.UCSC.hg38
 
