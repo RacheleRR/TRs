@@ -1,69 +1,132 @@
-# TRs
-It illustrates the process of identifying outliers using EHDN and DBSCAN, followed by other analysis 
+# 🧬 TRs: Finding Outliers with EHDN & DBSCAN
 
-# FIND OUTLIERS USING EHDN AND DBSCAN
-====================================
+Welcome to **TRs**! This project guides you through the process of detecting outliers in genomic data using **EHDN (Expansion Hunter Denovo)** and **DBSCAN (Density-Based Spatial Clustering of Applications with Noise)**. 
 
-## Overview
-This project demonstrates the process of identifying outliers using EHDN (Expansion Hunter Denovo) and DBSCAN (Density-Based Spatial Clustering of Applications with Noise). The steps outlined below detail how the data is processed and analyzed.
+---
 
+## 🌟 Overview
+This repository demonstrates how to:
+- Identify outliers in genomic datasets
+- Use **EHDN** for profiling and merging calls
+- Apply **DBSCAN** for clustering and outlier detection
+- Perform downstream statistical and proximity analyses
 
-## Objectives
-- Identify outliers in the dataset.
-- Utilize EHDN for profiling and merging calls.
-- Apply DBSCAN for clustering and outlier detection.
+---
 
+## 🎯 Objectives
+✔️ Detect outliers in genomic data  
+✔️ Process and refine data using **EHDN**  
+✔️ Cluster and analyze data using **DBSCAN**  
+✔️ Annotate, clean, and correlate results for further analysis  
 
+---
 
-## Prerequisites
-- [EHDN](https://github.com/Illumina/ExpansionHunterDenovo)
-- R
-- Python
-- Fazzar2020Script()
-- BTlib ()
+## 🛠️ Prerequisites
+Make sure you have the following installed:
+- [EHDN](https://github.com/Illumina/ExpansionHunterDenovo) 🧬
+- **R** 📊
+- **Python** 🐍
+- **Fazzar2020Script()**
+- **BTlib ()**
 
-## Steps
+---
 
-1. **Apply Profiling Command**
-    - Run the `ehdn_new_calls.sh` script to perform the profiling step using EHDN.
+## 🔍 Steps to Identify Outliers
 
-2. **Perform Quality Control**
-    - Execute the QC.sh script to perform quality control checks on the data and identifes and removes samples as outliers from anifesto file 
+### 1️⃣ **Profiling the Data**  
+Run `ehdn_new_calls.sh` to generate profiling data using EHDN.
 
-3. **Combine Samples&Regions and perform DBSCAN**
-   -Run the Combine_RUN_DBSCAN.sh to aggregate sample data, merge and compare regions and apply DBSCAN to cluster and detect outliers. 
+### 2️⃣ **Performing Quality Control**  
+Execute `QC.sh` to identify and remove low-quality samples from the **manifest file**.
 
-4. **Annotate**
-   -Run Annotate_C_C_prep_ANNOVAR.r to prep for the application of annotation script using Annovar and apply annotate_annovar.sh
+### 3️⃣ **Merging Data & Running DBSCAN**  
+Run `Combine_RUN_DBSCAN.sh` to:
+- Aggregate sample data
+- Merge and compare regions
+- Apply **DBSCAN** for clustering & outlier detection
 
-5. **Clean Dataframe and prepare it for future analysis**
-   -Run prepare_dataframes.r
+### 4️⃣ **Annotating Data**  
+Run:
+- `Annotate_prep_ANNOVAR.r` to prepare the data for annotation
+- `annotate_annovar.sh` to annotate using **ANNOVAR**
 
-6. **Correlation analysis**
-  - To investigate the association between genomic features and TRE. Run Correlation_in_domains.r
+### 5️⃣ **Cleaning & Preparing Data for Further Analysis**  
+Run `prepare_dataframes.r` to refine the dataset for downstream analysis.
 
-8. **Proximity Analysis**
-   - To assess spatial relationships with regulatory element and TRE. Run TSS_junction.r
-     
-10. **Statistical Analysis**
-    - To perform fisher, kruskal and wilcoxon analysis. RUn #
-   
+### 6️⃣ **Performing Correlation Analysis**  
+Run `Correlation_analysis.r` to investigate associations between genomic features and TREs.
 
+### 7️⃣ **Conducting Proximity Analysis**  
+Run `proximity_analysis.r` to assess spatial relationships between regulatory elements and TREs.
 
+### 8️⃣ **Executing Statistical Analysis**  
+Run `Statistics.r` to perform **Fisher, Kruskal, and Wilcoxon** tests.
 
-## Commands run 
+### 9️⃣ **Generating Gene Lists**  
+Run `gene_lists.r` to extract gene names associated with TREs.
 
-**Run profiling**
+---
+
+## 💻 Command Summary
+
+### 🔹 Run Profiling
+```sh
 ./ehdn_new_calls.sh
+```
 
-**Perform QC** 
- ./QC.sh -i /home/rachele/EHdn/new_calls/ -m /home/rachele/manifest_noUHRNA.tsv  -o /home/rachele/EHDN_DBSCAN_correct/Result/QC
+### 🔹 Perform Quality Control
+```sh
+./QC.sh -i /home/rachele/EHdn/new_calls/ -m /home/rachele/manifest_noUHRNA.tsv -o /home/rachele/EHDN_DBSCAN_correct/Result/QC
+```
 
-**Combine regions and samples and apply DBSCAN** 
-
+### 🔹 Merge Data & Run DBSCAN
+```sh
 ./Combine_RUN_DBSCAN.sh -m /home/rachele/EHDN_DBSCAN_correct/Result/QC/filtered_manifest.tsv
+./Combine_RUN_DBSCAN.sh -m /home/rachele/manifest_noUHRNA.tsv
+```
 
-./Combine_RUN_DBSCAN.sh -m /home/rachele/manifest_noUHRNA.tsv 
+### 🔹 Annotate Data
+```sh
+Rscript Annotate_prep_ANNOVAR.r
+./annotate_annovar.sh
+```
+
+### 🔹 Clean & Prepare Data
+```sh
+Rscript prepare_dataframes.r
+```
+
+### 🔹 Perform Correlation Analysis
+```sh
+Rscript Correlation_analysis.r
+```
+
+### 🔹 Conduct Proximity Analysis
+```sh
+Rscript proximity_analysis.r
+```
+
+### 🔹 Execute Statistical Analysis
+```sh
+Rscript Statistics.r
+```
+
+### 🔹 Generate Gene Lists
+```sh
+Rscript gene_lists.r
+```
+
+---
+
+## 🎉 Final Thoughts
+This pipeline streamlines the process of **outlier detection** in genomic datasets using EHDN and DBSCAN. We hope you find it useful! 🚀
+
+📩 Feel free to contribute or reach out with any questions! 😊
+
+
+
+
+
 
 
 
