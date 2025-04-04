@@ -18,6 +18,7 @@ This repository demonstrates how to:
 ✔️ Process and refine data using **EHDN**  
 ✔️ Cluster and analyze data using **DBSCAN**  
 ✔️ Annotate, clean, and correlate results for further analysis  
+✔️ Apply statistical analysis 
 
 ---
 
