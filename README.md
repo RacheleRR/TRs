@@ -61,7 +61,7 @@ Run `Correlation_analysis.r` to investigate associations between genomic feature
 Run `proximity_analysis.r` to assess spatial relationships between regulatory elements and TREs.
 
 ### 8️⃣ **Executing Statistical Analysis**  
-Run `Statistics.r` to perform **Fisher, Kruskal, and Wilcoxon** tests.
+Run `statistics_for_private_variants.r` and `Statistics_3_groups.r` and `Burden_genic_CpG.r to perform` **Fisher, Kruskal, and Wilcoxon** tests and for **burden**
 
 ### 9️⃣ **Generating Gene Lists**  
 Run `gene_lists.r` to extract gene names associated with TREs.
@@ -109,7 +109,13 @@ Rscript proximity_analysis.r
 
 ### 🔹 Execute Statistical Analysis
 ```sh
-Rscript Statistics.r
+Rscript statistics_for_private_variants.r
+Rscript Statistics_3_groups.r
+```
+
+### 🔹 Execute Burden Analysis 
+```sh
+Rscript Burden_genic_CpG.r
 ```
 
 ### 🔹 Generate Gene Lists
