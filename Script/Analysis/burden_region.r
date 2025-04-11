@@ -32,6 +32,7 @@ ehdn_results_annotated <- ehdn_results_annotated %>%
         TRUE ~ NA_real_  # Handle any unexpected values
     ))
 
+ ehdn_results_annotated <- ehdn_results_annotated %>% filter(count ==1 )
 # Filter rows where case_control is either 1 or 0 and create a new data frame called merge
 merge <- ehdn_results_annotated %>%
     filter(case_control == 1 | case_control == 0)
