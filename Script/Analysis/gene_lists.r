@@ -410,11 +410,11 @@ data_list_4 <- list(
 summary_sheet_4 <- data.frame(
   DataFrame_Name = names(data_list_4),
   Description = c(
-    "Summary of unique genes in each brain dataframe.",
-    "Case brain data (no filtering).",
-    "Case brain data (filtered).",
-    "Control brain data (no filtering).",
-    "Control brain data (filtered)."
+    "Summary of unique genes in each  dataframe.",
+    "Case  data (no filtering).",
+    "Case  data (filtered).",
+    "Control  data (no filtering).",
+    "Control  data (filtered)."
   )
 )
 # Save the second set of data frames to an Excel file
