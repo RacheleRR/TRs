@@ -7,7 +7,7 @@ library(kableExtra)
 library(tidyverse)
 library(readxl)
 library(broom)
-
+library(writexl)
 # load 
 brain_gene_consensus_filtered_consensus_no_pitular <- read.delim("~/brain_gene_list/consensus/brain_gene_consensus_filtered_consensus_no_pitular_no_unique.tsv")
 brain_gene_consensus_ntm_consensus_no_pitular <- read.delim("~/brain_gene_list/consensus/brain_gene_consensus_ntm_consensus_no_pitular_no_unique.tsv")
@@ -31,6 +31,13 @@ ehdn_results_annotated_split <- ehdn_results_annotated %>%
   mutate(Gene = gsub('\\([^\\)]+\\)', '', Gene)) %>%
   separate_rows(Gene, sep = ',') %>%
   mutate(CpG = ifelse(grepl("CG|GC|CGC|CGG|CCG|GCC|GGC|GCG", motif), 1, 0))
+
+
+ehdn_Case1 <- ehdn_results_annotated_split %>% filter(outlier_label == "Case", count == 1)
+ehdn_Case <- ehdn_results_annotated_split %>% filter(outlier_label == "Case")
+ehdn_Control <- ehdn_results_annotated_split %>% filter(outlier_label == "Control")
+ehdn_Control1 <- ehdn_results_annotated_split %>% filter(outlier_label == "Control", count == 1)
+
 
 #keep only genic regions
 ehdn_genic <- ehdn_results_annotated_split %>% filter(region != "intergenic")
@@ -201,6 +208,16 @@ summary_df_3 <- data.frame(
     length(unique(Case_brain_ntmp_genic_pure$Gene)), length(unique(Case_brain_ntmp_Case1_genic_pure$Gene)), length(unique(Case_brain_filter_Case1_genic_pure$Gene))
   )
 )
+
+summary_df_4 <- data.frame(DataFrame = c(
+  "ehdn_Case1","ehdn_Case", "ehdn_Control","ehdn_Control1" 
+),
+UniqueGenes = c(
+  length(unique(ehdn_Case1$Gene)), length(unique(ehdn_Case$Gene)), length(unique(ehdn_Control$Gene)),
+  length(unique(ehdn_Control1$Gene)))
+)
+
+
 
 #save them all as tsv files, sep \t and row name false , dont give the path
 write.table(ehdn_results_annotated_split, file = "ehdn_results_annotated_split.tsv", sep = "\t", row.names = FALSE)
@@ -380,6 +397,28 @@ summary_sheet_3 <- data.frame(
 save_to_excel(data_list_3, summary_sheet_3, "Case_brain_data_region.xlsx")
 
 
+
+# Create a list of data frames
+data_list_4 <- list(
+  summary_numbers =summary_df_4,
+  Case_1 = ehdn_Case1,
+  Case = ehdn_Case,
+  Control = ehdn_Control,
+  Control1 = ehdn_Control1
+)
+# Create a summary data frame for the first sheet
+summary_sheet_4 <- data.frame(
+  DataFrame_Name = names(data_list_4),
+  Description = c(
+    "Summary of unique genes in each brain dataframe.",
+    "Case brain data (no filtering).",
+    "Case brain data (filtered).",
+    "Control brain data (no filtering).",
+    "Control brain data (filtered)."
+  )
+)
+# Save the second set of data frames to an Excel file
+save_to_excel(data_list_4, summary_sheet_4, "Case_Control_data.xlsx")
 
 
 
