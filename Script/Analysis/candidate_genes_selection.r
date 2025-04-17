@@ -70,3 +70,7 @@ write.csv(common_ehdn_schizophrenia_cpg, file = "common_ehdn_schizophrenia_cpg.c
 write.csv(common_ehdn_gwas_cpg, file = "common_ehdn_gwas_cpg.csv", row.names = FALSE)
 
 
+#? gene list cpg 
+ehdn_cpg <- ehdn  %>% filter(CpG == 1 & region != "intergenic")
+
+write.csv(ehdn_cpg, file = "ehdn_cpg.csv", row.names = FALSE)
